@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Utils test</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="./dist/Utils.js"></script>
+    <script src="./dialog.js"></script>
+    <script>
+    console.log(Utils.similar({a: 1,b: 2}, {b: 2}));
+    console.log(Utils.similar({a: 1,b: 2}, {b: 2, a: 1}));
+    console.log(Utils.similar([{a: 1}], [{a: 1}]));
+    console.log(Utils.similar([{a: 1}], [{a: 1, b: 1}]));
+    console.log(Utils.similar({}, {}));
+
+    console.log(Utils.uniq([1, 2, 3, 4, 5, 6, 3, 2]));
+    console.log(Utils.uniqBy([{id: 1}, {id: 16}, {id: 3}, {id: 1}, {id: 16}], 'id'));
+
+
+    var orderData = {
+        businessType: 1,
+
+        arr: 2,
+        sendUser: {
+            units: '',
+            contactPeople: '',
+            contactPhone: '',
+            region: 0,
+            address: ['广州', '深圳', 2]
+        }
+    };
+
+    var orderDataSchema = {
+        businessType: 'number',
+
+        arr: 'array',
+        sendUser: {
+            units: 'string',
+            contactPeople: 'string',
+            contactPhone: 'string',
+            region: 'string',
+            address: ['number'],
+            remark: 'string'
+        }
+    };
+
+    Utils.jsonSchema.validate(orderData, orderDataSchema, function(val, type, path) {
+        switch (type) {
+            case 'number':
+                Utils.parseExp(orderData, path.replace(/^root\./, ''), +val || 0);
+                break;
+            case 'notFuond':
+                console.warn('缺少' + path)
+                break;
+            default: 
+                console.warn(path + '期待的是' + type)
+                break;
+        }
+    });
+
+
+    console.log(Utils.extend(true, {
+        user: {
+            units: {
+                name: 'user should show'
+            },
+            log: [
+                {name: 'log user should hide'},
+                {name: 'log user 2 should hide'},
+                {name: 'log user should show'}
+            ]
+        }
+    }, {
+        user: {
+            units: {
+                id: 1
+            },
+            log: [
+                {name: 'log cyc shuold show'},
+                {name: 'log cyc2 shuold show'}
+            ],
+            newArray: [{
+                id: 456
+            }]
+        }
+    }));
+
+    </script>
+</body>
+
+</html>

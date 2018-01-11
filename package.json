@@ -1,0 +1,21 @@
+{
+  "name": "Utils",
+  "version": "0.0.9",
+  "description": "",
+  "scripts": {
+    "start": "node server.js",
+    "build": "set BABEL_ENV=production && webpack --config webpack.config.pub.js --progress"
+  },
+  "repository": {},
+  "keywords": [
+    "Utils"
+  ],
+  "author": "cyc",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.8",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {}
+}
